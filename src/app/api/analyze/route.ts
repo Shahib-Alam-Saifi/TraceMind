@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     const { error, service } = values(body, ['error', 'service']);
     const memoryEnabled = body.memoryEnabled !== false;
     const bank = memoryEnabled ? await ensureBank() : '';
-    const recalled = memoryEnabled ? await hindsight().recall(bank, `${service} ${error}`, { limit: 5 }) : null;
+    const recalled = memoryEnabled ? await hindsight().recall(bank, `${service} ${error}`) : null;
     const evidence: Evidence[] = (recalled?.results ?? []).map((r, i) => ({ id: String(i + 1), text: r.text }));
     const prompt = makePrompt({ error, service, memories: evidence, memoryEnabled });
     let diagnosis: string;
