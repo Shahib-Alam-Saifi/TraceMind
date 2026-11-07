@@ -28,7 +28,7 @@ import {
   X,
 } from 'lucide-react';
 import type { Analysis, StoredMemoryItem } from '@/lib/types';
-import { generatePostMortem } from '@/lib/core.mjs';
+import { generatePostMortem, generateBandAIPrompt } from '@/lib/core.mjs';
 
 type Status = {
   hindsightConfigured: boolean;
@@ -229,6 +229,42 @@ export default function Home() {
       fix: confirmed.fix,
     });
     copyText(report, 'Full Post-Mortem Markdown Report');
+  }
+
+  function copyBandAIPrompt() {
+    if (!analysis) return;
+    const promptText = generateBandAIPrompt({
+      service,
+      error,
+      diagnosis: analysis.diagnosis,
+      fix: confirmed.fix,
+    });
+    copyText(promptText, 'Band AI Desktop Agent Prompt');
+  }
+
+  async function seedDemoData() {
+    setLoadingMemories(true);
+    setMessage('');
+    try {
+      const r = await fetch('/api/incident', {
+        method: 'POST',
+        headers: requestHeaders,
+        body: JSON.stringify({ action: 'seed' }),
+      });
+      const json = await r.json();
+      if (!r.ok) throw new Error(json.error || 'Seed failed');
+      const newCount = savedCount + (json.seededCount || 3);
+      setSavedCount(newCount);
+      try {
+        localStorage.setItem('tracemind_saved_count', String(newCount));
+      } catch {}
+      setMessage(json.message || 'Seeded 3 realistic enterprise incidents to Hindsight.');
+      fetchStoredMemories();
+    } catch (e) {
+      setMessage(e instanceof Error ? e.message : 'Could not seed incidents');
+    } finally {
+      setLoadingMemories(false);
+    }
   }
 
   function exportBandAIJson() {
@@ -595,6 +631,9 @@ export default function Home() {
                         >
                           <Copy size={15} /> Copy Memory Diagnosis
                         </button>
+                        <button className="outline" onClick={copyBandAIPrompt}>
+                          <TerminalSquare size={15} /> Copy for Band AI
+                        </button>
                         <button className="outline" onClick={exportPostMortem}>
                           <Download size={15} /> Export Post-Mortem Report
                         </button>
@@ -654,6 +693,9 @@ export default function Home() {
                           onClick={() => copyText(analysis.diagnosis, 'Diagnosis')}
                         >
                           <Copy size={15} /> Copy Diagnosis
+                        </button>
+                        <button className="outline" onClick={copyBandAIPrompt}>
+                          <TerminalSquare size={15} /> Copy for Band AI
                         </button>
                         <button className="outline" onClick={exportPostMortem}>
                           <Download size={15} /> Export Post-Mortem Report
@@ -721,6 +763,13 @@ export default function Home() {
                 <div className="btn-group">
                   <button
                     className="outline"
+                    onClick={seedDemoData}
+                    disabled={loadingMemories}
+                  >
+                    <Sparkles size={15} /> Seed Enterprise Incidents
+                  </button>
+                  <button
+                    className="outline"
                     onClick={fetchStoredMemories}
                     disabled={loadingMemories}
                   >
@@ -776,9 +825,11 @@ export default function Home() {
                 ) : (
                   <div className="empty-state">
                     <p>
-                      No stored incident matches found in this bank. Use &quot;Add confirmed
-                      incident&quot; to save your first tested resolution!
+                      No stored incident matches found in this bank. Click below to pre-populate with 3 realistic enterprise incidents, or record your own verified resolution!
                     </p>
+                    <button className="primary" onClick={seedDemoData} style={{ marginTop: 14 }}>
+                      <Sparkles size={16} /> Seed 3 Realistic Enterprise Incidents
+                    </button>
                   </div>
                 )}
               </div>

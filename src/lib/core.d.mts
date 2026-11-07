@@ -12,3 +12,9 @@ export function generatePostMortem(args: {
   fix?: string;
   rootCause?: string;
 }): string;
+export function generateBandAIPrompt(args: {
+  service: string;
+  error: string;
+  diagnosis: string;
+  fix?: string;
+}): string;

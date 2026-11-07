@@ -7,6 +7,7 @@ import {
   makePrompt,
   redactSecrets,
   generatePostMortem,
+  generateBandAIPrompt,
 } from '../src/lib/core.mjs';
 
 test('sanitizes non-strings and trims input', () => {
@@ -93,4 +94,17 @@ test('generates structured post-mortem report', () => {
   assert.match(report, /Likely network partition/);
   assert.match(report, /Gateway port 443 misconfigured/);
   assert.match(report, /Whitelisted CIDR block/);
+});
+
+test('generates collaborative prompt for Band AI Desktop agents', () => {
+  const prompt = generateBandAIPrompt({
+    service: 'api-gateway',
+    error: 'HTTP 502 Bad Gateway',
+    diagnosis: 'Reverse proxy port mismatch',
+    fix: 'Aligned upstream port to 3000',
+  });
+  assert.match(prompt, /@agent Task: Resolve production incident/);
+  assert.match(prompt, /api-gateway/);
+  assert.match(prompt, /Reverse proxy port mismatch/);
+  assert.match(prompt, /Aligned upstream port to 3000/);
 });
