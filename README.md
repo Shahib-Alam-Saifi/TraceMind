@@ -1,5 +1,5 @@
 
-# 🧠 TraceMind
+#  TraceMind
 ### AI-Powered Incident Investigation with Persistent Memory
 
 **Investigate faster. Remember every fix.**
@@ -12,15 +12,15 @@ Unlike traditional AI debugging assistants that analyze each problem independent
 
 ## 🌐 Live Demo
 
-🚀 **[Launch TraceMind](https://tracemind-3tvdfok0o-editorxp1-alts-projects.vercel.app/)**
+ **[Launch TraceMind](https://tracemind-3tvdfok0o-editorxp1-alts-projects.vercel.app/)**
 
-📂 **[GitHub Repository](https://github.com/Shahib-Alam-Saifi/TraceMind)**
+ **[GitHub Repository](https://github.com/Shahib-Alam-Saifi/TraceMind)**
 
 > The deployed application may require Vercel authentication if deployment protection is enabled.
 
 ---
 
-## 🎯 Problem Statement
+##  Problem Statement
 
 Development teams frequently encounter recurring bugs, deployment failures, and production incidents.
 
@@ -36,22 +36,22 @@ This results in:
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 | Feature | Description |
 |---|---|
-| 🧠 Persistent Memory | Stores confirmed incidents and successful fixes using Hindsight |
-| 🔍 AI Incident Analysis | Analyzes errors and suggests debugging steps |
-| 📚 Historical Recall | Retrieves relevant previously resolved incidents |
-| ⚡ Memory Comparison | Compares diagnoses with and without historical context |
-| 🛠️ Resolution Tracking | Records verified root causes and fixes |
-| 📊 Evidence Display | Shows recalled incident evidence alongside AI diagnoses |
-| 💻 Developer Dashboard | Responsive interface for investigating incidents |
-| 🔐 Server-Side API Integration | Keeps provider credentials outside frontend code |
+|   Persistent Memory | Stores confirmed incidents and successful fixes using Hindsight |
+|   AI Incident Analysis | Analyzes errors and suggests debugging steps |
+|   Historical Recall | Retrieves relevant previously resolved incidents |
+|   Memory Comparison | Compares diagnoses with and without historical context |
+|   Resolution Tracking | Records verified root causes and fixes |
+|   Evidence Display | Shows recalled incident evidence alongside AI diagnoses |
+|   Developer Dashboard | Responsive interface for investigating incidents |
+|   Server-Side API Integration | Keeps provider credentials outside frontend code |
 
 ---
 
-## 🏗️ System Architecture
+##   System Architecture
 
 ```text
            Developer
