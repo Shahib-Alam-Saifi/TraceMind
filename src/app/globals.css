@@ -3,3 +3,18 @@
 @media(max-width:1100px){.sidebar{width:225px}.content{padding:28px 25px}.hero-graphic{width:220px;margin-right:0}.floating-mini.two{right:0}.topbar{padding:0 25px}}
 @media(max-width:850px){.sidebar{position:fixed;left:-270px;transition:left .2s;box-shadow:10px 0 30px #0006}.sidebar.open{left:0}.mobile-menu{display:block}.topbar{height:62px}.hero-graphic{display:none}.work-grid{grid-template-columns:1fr}.stat-grid{gap:10px}.stat{padding:16px}.stat strong{font-size:18px}}
 @media(max-width:570px){.content{padding:18px 14px 40px}.topbar{padding:0 15px}.hero{padding:26px 23px;min-height:280px}.hero h1{font-size:31px}.stat-grid{grid-template-columns:1fr}.stat{padding:14px 17px}.stat strong{font-size:20px;margin:8px 0}.workspace-head{align-items:flex-start;flex-direction:column}.panel{padding:18px}.info-grid{grid-template-columns:1fr}.top-actions>.badge{font-size:0}.top-actions>.badge .status-dot{width:8px;height:8px}.subpage-head h1{font-size:32px}.empty-state{padding:30px 5px}}
+
+/* TraceMind Enterprise & Hackathon Extensions */
+.badge.info{color:#76a9ff;border-color:#2a4575;background:#101e38}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.memory-list{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.memory-card{background:#111927;border:1px solid #27364b;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s}
+.memory-card:hover{border-color:#466596}
+.memory-card-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.memory-card-body{font-size:12px;color:#abbdcf;line-height:1.7}
+.memory-card-code{background:#0a0f18;border:1px solid #1f2c3d;border-radius:7px;padding:8px 12px;font:11px/1.6 ui-monospace,Menlo,monospace;color:#a8c4f0;white-space:pre-wrap;overflow-wrap:anywhere}
+.memory-card-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:4px}
+.search-bar{display:flex;gap:10px;margin:20px 0;flex-wrap:wrap}
+.search-bar input{max-width:380px}
+.dual-pane{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:850px){.dual-pane{grid-template-columns:1fr}}
