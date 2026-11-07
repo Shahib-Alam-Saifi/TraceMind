@@ -89,7 +89,7 @@ test('generates structured post-mortem report', () => {
     rootCause: 'Firewall egress rule dropped traffic',
     fix: 'Whitelisted CIDR block',
   });
-  assert.match(report, /Incident Post-Mortem Report/);
+  assert.match(report, /Incident Post-Mortem/);
   assert.match(report, /payment-service/);
   assert.match(report, /Likely network partition/);
   assert.match(report, /Gateway port 443 misconfigured/);

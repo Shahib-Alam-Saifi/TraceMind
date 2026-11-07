@@ -12,21 +12,43 @@ const DEMO_SEED_INCIDENTS = [
     error: 'HTTP 502 Bad Gateway: Upstream connection refused on port 8080 during traffic spike.',
     rootCause:
       'Application container was listening on port 3000 while reverse proxy upstream.conf routed traffic to port 8080.',
-    fix: 'Aligned PORT environment variable and reverse proxy upstream.conf to port 3000; health check returned 200 OK.',
+    fix: [
+      '--- /etc/nginx/conf.d/upstream.conf',
+      '+++ /etc/nginx/conf.d/upstream.conf',
+      '@@ -12,3 +12,3 @@',
+      '- proxy_pass http://upstream_app:8080;',
+      '+ proxy_pass http://upstream_app:3000;',
+    ].join('\n'),
   },
   {
-    service: 'payment-service',
-    error: 'StripeWebhookError: Webhook signature verification failed on endpoint /api/webhooks/stripe.',
-    rootCause:
-      'Webhook endpoint used raw body parsing after global express.json() middleware had already consumed the incoming byte stream.',
-    fix: 'Mounted express.raw() specifically on the webhook route before global body parsing middleware.',
+    service: 'frontend-web',
+    error:
+      'Error: Element type is invalid: expected a string or a class/function but got undefined. Check the render method of Navbar.',
+    rootCause: 'Navbar was exported as default but imported using named import syntax.',
+    fix: [
+      '--- src/components/Header.tsx',
+      '+++ src/components/Header.tsx',
+      '@@ -3,1 +3,1 @@',
+      '- import { Navbar } from "./Navbar";',
+      '+ import Navbar from "./Navbar";',
+    ].join('\n'),
   },
   {
     service: 'worker-queue',
-    error: 'RedisConnectionTimeout: Reached max retry limit of 10 while polling task queue after idle period.',
+    error:
+      'RedisConnectionTimeout: Reached max retry limit of 10 while polling task queue after idle period.',
     rootCause:
       'Redis connection pool exhaustion caused by missing client.release() in async error handler.',
-    fix: 'Wrapped worker task execution in try...finally block ensuring client connection is always released back to pool.',
+    fix: [
+      '--- src/workers/consumer.ts',
+      '+++ src/workers/consumer.ts',
+      '@@ -24,3 +24,5 @@',
+      '- const conn = await pool.acquire();',
+      '- await processJob(conn, data);',
+      '+ const conn = await pool.acquire();',
+      '+ try { await processJob(conn, data); }',
+      '+ finally { pool.release(conn); }',
+    ].join('\n'),
   },
 ];
 
@@ -80,7 +102,7 @@ export async function POST(request: Request) {
         success: true,
         seededCount: seededIds.length,
         seededIds,
-        message: 'Retained 3 realistic enterprise incidents into Hindsight memory bank.',
+        message: 'Retained 3 realistic enterprise incidents with code diffs into Hindsight memory bank.',
       });
     }
 
